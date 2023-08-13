@@ -1,4 +1,3 @@
-print('my mappings')
 vim.g.mapleader = " "
 vim.keymap.set("i", "jk", "<c-o>:stopinsert<CR>")
 

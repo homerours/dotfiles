@@ -33,6 +33,14 @@ return require('packer').startup(function(use)
 
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
+    -- Completion
+    use 'L3MON4D3/LuaSnip'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/cmp-path'
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/nvim-cmp'
+
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
@@ -41,11 +49,6 @@ return require('packer').startup(function(use)
             { 'neovim/nvim-lspconfig' }, -- Required
             --            {'williamboman/mason.nvim'},           -- Optional
             --            {'williamboman/mason-lspconfig.nvim'}, -- Optional
-
-            -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },     -- Required
-            { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' },     -- Required
         }
     }
 
