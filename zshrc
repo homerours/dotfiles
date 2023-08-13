@@ -1,6 +1,9 @@
 #export TERM=xterm-256color
 source ~/dotfiles/shellrc.sh
 
+# Case-insensitive completion on mac
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # VIM MODE
 bindkey -v
 bindkey jk vi-cmd-mode 
