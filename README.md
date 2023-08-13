@@ -1,7 +1,5 @@
 # dotfiles
 
-Tips [here](notes.md)
-
 ## Installation
 1. Clone
 `git clone https://github.com/homerours/dotfiles`
@@ -16,3 +14,6 @@ Install Vim plugins (install vim-plug using install.sh before):
 Deoplete (completion for neovim) requires python3 support. Run
 `pip install neovim`
 `:UpdateRemotePlugins`
+
+## Neovim
+`:PackerInstall` and `:PackerSync`
