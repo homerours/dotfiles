@@ -16,6 +16,8 @@ vim.keymap.set("n", "<leader>q", ":bd<CR>")
 -- open last buffer
 vim.keymap.set("n", "<leader>l", ":b#<CR>")
 
+vim.keymap.set("n", "<leader><Tab>", "<C-w>")
+
 -- J without moving
 vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
