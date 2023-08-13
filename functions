@@ -1,0 +1,43 @@
+#!/bin/bash
+# Functions
+
+# Prepend sudo to a command
+function run-with-sudo()
+{
+	LBUFFER="sudo $LBUFFER"
+}
+
+# Create directory and move into
+function mcd()
+{
+	mkdir $1 && cd $1
+}
+
+# move to ~/.Trash instead of rm a file
+function del()
+{
+	for i in $* ; do
+		mv $i ~/.local/share/Trash/files/
+	done
+}
+
+# Compress pdf using Ghostscript
+function pdf_compress()
+{
+	gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=compressed_$1 $1
+}
+
+# Format pdf 2 pages per sheet and remove margins
+# left, top, right and bottom margins
+function pdf_sbs()
+{
+	pdfcrop --margins '0 0 0 0' $1 crop_$1;
+	pdfnup --scale 1.00 --delta "-0.0cm 0cm -0cm 0cm" --outfile sbs_$1 crop_$1;
+	rm crop_$1;
+}
+
+# Show group users
+function members ()
+{
+	grep $1 /etc/group
+}
