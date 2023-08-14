@@ -63,4 +63,30 @@ return require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         requires = { 'nvim-tree/nvim-web-devicons', opt = true },
     }
+    use "mfussenegger/nvim-dap"
+    use { "mfussenegger/nvim-dap-python",
+        ft = 'python',
+        requires = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
+        config = function()
+            local path = '~/rangerned/bin/python'
+            require('dap-python').setup(path)
+        end
+    }
+    use { "rcarriga/nvim-dap-ui",
+        requires = { "mfussenegger/nvim-dap" },
+        config = function()
+            local dap = require("dap")
+            local dapui = require("dapui")
+            dapui.setup()
+            dap.listeners.after.event_initialized["dapui_config"] = function()
+                dapui.open()
+            end
+            dap.listeners.before.event_terminated["dapui_config"] = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited["dapui_config"] = function()
+                dapui.close()
+            end
+        end
+    }
 end)
