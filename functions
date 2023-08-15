@@ -1,11 +1,6 @@
 #!/bin/bash
 # Functions
 
-# Prepend sudo to a command
-function run-with-sudo()
-{
-	LBUFFER="sudo $LBUFFER"
-}
 
 # Create directory and move into
 function mcd()

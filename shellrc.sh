@@ -1,7 +1,3 @@
-#export TERM=xterm-256color
-#eval `dircolors ~/.dircolors.ansi-dark`
-#eval `dircolors ~/.dircolors.256dark`
-#eval `dircolors ~/.dircolors.ansi-universal`
 export CLICOLOR=1
 export LSCOLORS="hx"
 

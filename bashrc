@@ -14,7 +14,6 @@ set cmdhist
 shopt -s checkwinsize
 shopt -s cdspell
 
-
 # FZF fuzzy finder
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 if [ -f ~/.fzf.bash ]
