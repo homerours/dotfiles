@@ -41,5 +41,12 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "<S-h>", "gT")
 vim.keymap.set("n", "<S-l>", "gt")
 
+-- Disable arrows and mouse
+vim.keymap.set("", "<up>", "<nop>", { noremap = true })
+vim.keymap.set("", "<down>", "<nop>", { noremap = true })
+vim.keymap.set("i", "<up>", "<nop>", { noremap = true })
+vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
+vim.opt.mouse = ""
+--
 --vim.keymap.set("i", "<TAB>", "<C-n>")
 --vim.keymap.set("i", "<S-TAB>", "<C-p>")
