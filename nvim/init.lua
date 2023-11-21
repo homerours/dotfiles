@@ -11,9 +11,6 @@ vim.api.nvim_create_autocmd('filetype', {
             vim.keymap.set('n', lhs, rhs, { remap = true, buffer = true })
         end
 
-        -- edit new file
-        bind('n', '%')
-
         -- rename file
         bind('r', 'R')
 
