@@ -1,6 +1,6 @@
 require('homerours')
 vim.opt.path:append '**'
-vim.cmd("colorscheme nightfox")
+--vim.cmd("colorscheme nightfox")
 
 -- netrw
 vim.api.nvim_create_autocmd('filetype', {
