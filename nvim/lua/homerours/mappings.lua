@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 vim.keymap.set("i", "jk", "<c-o>:stopinsert<CR>")
 
-vim.keymap.set("n", "<leader>e", vim.cmd.Vex)
+-- vim.keymap.set("n", "<leader>e", vim.cmd.Vex)
 -- close all other windows
 vim.keymap.set("n", "<leader>o", ":only<CR>")
 -- remove search highlighting
