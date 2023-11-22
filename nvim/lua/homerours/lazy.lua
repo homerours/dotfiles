@@ -14,5 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     { import = "homerours.plugins" },
     { import = "homerours.treesitter" },
-    { import = "homerours.lsp" },
-    { import = "homerours.dap" } })
+    -- { import = "homerours.lsp" },
+    -- { import = "homerours.dap" },
+})
