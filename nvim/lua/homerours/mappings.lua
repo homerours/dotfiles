@@ -1,5 +1,6 @@
 vim.g.mapleader = " "
 vim.keymap.set("i", "jk", "<c-o>:stopinsert<CR>")
+vim.keymap.set("v", "jk", "<esc>")
 
 -- vim.keymap.set("n", "<leader>e", vim.cmd.Vex)
 -- close all other windows

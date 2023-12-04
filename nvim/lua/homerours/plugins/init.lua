@@ -5,6 +5,7 @@ return {
         event = "InsertEnter",
         opts = {}
     },
+    'ThePrimeagen/vim-be-good',
     'tpope/vim-surround',
     -- {"nvim-telescope/telescope-fzf-native.nvim", build = 'make'},
     -- Completion
