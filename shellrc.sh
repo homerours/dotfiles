@@ -22,4 +22,4 @@ source ~/dotfiles/colors.sh
 source ~/dotfiles/git_prompt
 
 # include Z
-. ~/dotfiles/z.sh
+# . ~/dotfiles/z.sh
