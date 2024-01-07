@@ -16,7 +16,8 @@ return {
                     i = {
                         ["<C-j>"] = actions.move_selection_next,
                         ["<C-k>"] = actions.move_selection_previous,
-                        ["<C-t>"] = actions.file_tab
+                        ["<C-t>"] = actions.file_tab,
+                        ["<C-e>"] = actions.file_edit
                     }
                 }
             }

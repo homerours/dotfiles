@@ -22,4 +22,5 @@ source ~/dotfiles/colors.sh
 source ~/dotfiles/git_prompt
 
 # include Z
-# . ~/dotfiles/z.sh
+# source ~/dotfiles/z.sh
+source ~/Documents/dev/jumper/jumper.sh

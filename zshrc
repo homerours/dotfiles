@@ -30,3 +30,4 @@ then
 	bindkey '^P' fzf-file-widget
 	source ~/.fzf.zsh
 fi
+# eval "$(lua ~/z.lua/z.lua --init zsh)"
