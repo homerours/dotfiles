@@ -13,14 +13,12 @@ export SUDO_EDITOR="$editor"
 export GIT_EDITOR="$editor"
 
 # Aliases
-source ~/dotfiles/aliases
+source ~/dotfiles/aliases.sh
 # Functions
-source ~/dotfiles/functions
+source ~/dotfiles/functions.sh
 # Colors
 source ~/dotfiles/colors.sh
 # Git prompt
-source ~/dotfiles/git_prompt
-
-# include Z
-# source ~/dotfiles/z.sh
+source ~/dotfiles/git_prompt.sh
+# Jumper
 source ~/Documents/dev/jumper/jumper.sh

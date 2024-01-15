@@ -4,6 +4,8 @@ vim.opt.cursorline = true
 vim.opt.termguicolors = true
 
 vim.opt.wrap = true
+vim.opt.swapfile = false
+vim.opt.winbar = '%f %m'
 vim.opt.relativenumber = true
 
 vim.opt.hlsearch = true

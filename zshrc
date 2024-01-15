@@ -10,6 +10,10 @@ bindkey jk vi-cmd-mode
 
 bindkey '\e[Z' reverse-menu-complete
 
+# append + share history
+setopt inc_append_history
+setopt share_history
+
 # Prepend sudo to a command
 function run-with-sudo()
 {
@@ -30,4 +34,3 @@ then
 	bindkey '^P' fzf-file-widget
 	source ~/.fzf.zsh
 fi
-# eval "$(lua ~/z.lua/z.lua --init zsh)"

@@ -7,9 +7,10 @@ return {
     },
     {
         dir = "~/Documents/dev/telescope-jumper",
+        dependencies = { 'nvim-telescope/telescope.nvim' },
         config = function()
             local jumper = require("telescope").extensions.jumper
-            vim.keymap.set('n', '<c-j>', jumper.jump, {})
+            vim.keymap.set('n', '<c-y>', jumper.jump, {})
         end,
     },
     'ThePrimeagen/vim-be-good',

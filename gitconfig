@@ -9,13 +9,13 @@
     br = branch
     pom = push origin master
     pum = pull origin master
-
-[alias]
-# view abbreviated sha, description, and history graph of the latest 20 commits
     l = log --pretty=oneline -n 20 --graph --abbrev-commit
-
-# Commit all changes
     ca = !git add -A && git commit -av
+
+[push]
+	default = current
+[pull]
+	default = current
 
 [color]
 # Use colors in Git commands that are capable of colored output when

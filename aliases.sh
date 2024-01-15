@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # VIM
 alias svim="sudoedit"
 # NeoVIM
@@ -9,7 +7,7 @@ then
 fi
 
 #LS
-alias ls='ls -p'
+alias ls='ls -p --color=always'
 alias sl='ls'
 alias l='ls'
 alias la='ls -lah'
@@ -33,6 +31,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
+alias .......='cd ../../../../../..'
 
 # tree
 alias t='tree -L 1'
