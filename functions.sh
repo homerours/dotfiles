@@ -1,6 +1,6 @@
 # FZF
 function ff() {
-    RG_PREFIX='rg --column --line-number --color=always '
+    RG_PREFIX='rg -i --column --line-number --color=always '
     INITIAL_QUERY=''
     fzf --ansi --disabled --query "$INITIAL_QUERY" \
     --bind "start:reload:$RG_PREFIX {q}" \
@@ -39,8 +39,8 @@ function __switch_session() {
 function tn() {
     name=$1
     [[ ! -z $name ]] || name='session'
-    tmux new-session -d -s "${name}"
     name=$(__session_name $name)
+    tmux new-session -d -s "${name}"
     __switch_session "${name}"
 }
 

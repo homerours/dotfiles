@@ -6,7 +6,7 @@ return {
         opts = {}
     },
     {
-        dir = "~/Documents/dev/telescope-jumper",
+        "homerours/telescope-jumper",
         dependencies = { 'nvim-telescope/telescope.nvim' },
         config = function()
             local jumper = require("telescope").extensions.jumper
