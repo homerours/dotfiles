@@ -1,6 +1,5 @@
 require('homerours')
 vim.opt.path:append '**'
---vim.cmd("colorscheme nightfox")
 
 -- netrw
 vim.api.nvim_create_autocmd('filetype', {
@@ -13,7 +12,6 @@ vim.api.nvim_create_autocmd('filetype', {
 
         -- rename file
         bind('r', 'R')
-
         bind('l', '<CR>')
     end
 })

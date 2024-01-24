@@ -8,7 +8,7 @@ return {
         lsp.ensure_installed({
             'pyright'
         })
-        lsp.setup_servers({ "pyright", "lua_ls" , "ccls"})
+        lsp.setup_servers({ "pyright", "lua_ls", "ccls" })
 
         lsp.set_preferences({
             suggest_lsp_servers = false,
@@ -33,6 +33,16 @@ return {
             vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
             vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
         end)
+
+        require('lspconfig').lua_ls.setup {
+            settings = {
+                Lua = {
+                    diagnostics = {
+                        globals = { 'vim' }
+                    }
+                }
+            }
+        }
 
         lsp.setup()
     end
