@@ -10,8 +10,8 @@ return {
         dependencies = { 'nvim-telescope/telescope.nvim' },
         config = function()
             local jumper = require("telescope").extensions.jumper
-            vim.keymap.set('n', '<c-y>', jumper.jump, {})
-            vim.keymap.set('n', '<c-u>', jumper.jump_file, {})
+            vim.keymap.set('n', '<c-y>', jumper.jump_to_folder, {})
+            vim.keymap.set('n', '<c-u>', jumper.jump_to_file, {})
             vim.keymap.set('n', '<leader>fu', jumper.find_in_files, {})
 
             vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPre" }, {
@@ -19,7 +19,7 @@ return {
                 callback = function(ev)
                     local filename = vim.api.nvim_buf_get_name(ev.buf)
                 if not (string.find(filename, "/.git") or string.find(filename, ":")) then
-                        local cmd = 'jumper -f ${jumpfile_files} -a ' .. filename
+                        local cmd = 'jumper -f ${__JUMPER_FILES} -a ' .. filename
                         os.execute(cmd)
                     end
                 end

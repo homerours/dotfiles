@@ -11,7 +11,7 @@ function ff() {
     --bind 'enter:become(nvim {1} +{2})'
 }
 function fu() {
-    RG_PREFIX="jumper -f ${jumpfile_files} '' | xargs rg -i --column --line-number --color=always "
+    RG_PREFIX="jumper -f ${__JUMPER_FILES} '' | xargs rg -i --column --line-number --color=always "
     INITIAL_QUERY=''
     fzf --ansi --disabled --query "$INITIAL_QUERY" \
     --bind "start:reload:$RG_PREFIX {q}" \
@@ -56,7 +56,7 @@ function tn() {
 }
 
 function tz() {
-    folder=$(jumper -f "${jumpfile}" -n 1 "$1")
+    folder=$(jumper -f "${__JUMPER_FOLDERS}" -n 1 "$1")
     name=$(__session_name $(basename ${folder}))
     tmux new-session -d -s "${name}"
     tmux send-keys -t "${name}" "cd ${folder}" 'C-m' 'C-l'
