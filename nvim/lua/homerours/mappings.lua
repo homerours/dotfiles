@@ -50,5 +50,5 @@ vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
 vim.opt.mouse = ""
 --
 -- Jumper
-vim.cmd('command! -nargs=+ Z :cd `jumper -f ${__JUMPER_FOLDERS} -n 1 <args>`')
-vim.cmd('command! -nargs=+ Zf :edit `jumper -f ${__JUMPER_FILES} -n 1 <args>`')
+vim.cmd("command! -nargs=+ Z :cd `jumper -f ${__JUMPER_FOLDERS} -n 1 '<args>'`")
+vim.cmd("command! -nargs=+ Zf :edit `jumper -f ${__JUMPER_FILES} -n 1 '<args>'`")

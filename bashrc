@@ -1,4 +1,6 @@
 source ~/dotfiles/shellrc.sh
+# Jumper
+source ~/Documents/dev/jumper/shell/jumper.bash
 # Terminal Colors
 export CLICOLOR=1
 

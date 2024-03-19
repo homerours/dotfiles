@@ -20,5 +20,3 @@ source ~/dotfiles/functions.sh
 source ~/dotfiles/colors.sh
 # Git prompt
 source ~/dotfiles/git_prompt.sh
-# Jumper
-source ~/Documents/dev/jumper/jumper.sh
