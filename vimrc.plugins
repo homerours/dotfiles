@@ -16,17 +16,17 @@ Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdcommenter'
 
  ""COMPLETION
-if has('nvim')
-	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	let g:deoplete#sources#jedi#python_path = 'python3'
-else
-	Plug 'maralla/completor.vim'
-endif
+"if has('nvim')
+	"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	"let g:deoplete#sources#jedi#python_path = 'python3'
+"else
+	"Plug 'maralla/completor.vim'
+"endif
 
 ""============= LANGUAGE SPECIFIC ==============
 
 " Python
-Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
+"Plug 'numirias/semshi', { 'do': ':UpdateRemotePlugins' }
 Plug 'dense-analysis/ale'
 Plug 'davidhalter/jedi-vim'
 

@@ -1,10 +1,10 @@
 # VIM
 alias svim="sudoedit"
 # NeoVIM
-if type nvim > /dev/null 2>&1
-then
-  alias vim='nvim'
-fi
+ if type nvim > /dev/null 2>&1
+ then
+   alias vim='nvim'
+ fi
 
 #LS
 alias ls='ls -p --color=always'

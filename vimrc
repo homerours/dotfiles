@@ -117,5 +117,16 @@ if has('statusline')
 	set statusline+=%=%-14.(%l,%c%v%)\ %p%%  " right aligned file nav info
 endif
 
+autocmd BufReadPre,BufNewFile *   silent execute '!jumper -f ${__JUMPER_FILES} -a ' .. expand('%:p')
+" autocmd BufReadPre *   silent execute '!echo hello leo'
+command! -nargs=+ Z :cd `jumper -f ${__JUMPER_FOLDERS} -n 1 '<args>'`
+command! -nargs=+ Zf :edit `jumper -f ${__JUMPER_FILES} -n 1 '<args>'`
+
+command! JumperFiles call fzf#run(fzf#wrap({'source': 'jumper -f ${__JUMPER_FILES} -n 150', 'options': '--reverse --ansi --disabled --bind "change:reload:sleep 0.05; jumper -f ${__JUMPER_FILES} -n 150 -c {q} || true"'}))
+command! JumperFolders call fzf#run(fzf#wrap({'source': 'jumper -f ${__JUMPER_FOLDERS} -n 150', 'options': '--reverse --ansi --disabled --bind "change:reload:sleep 0.05; jumper -f ${__JUMPER_FOLDERS} -n 150 -c {q} || true"'}))
+
+nnoremap <C-u> :JumperFiles<CR>
+nnoremap <C-y> :JumperFolders<CR>
+
 " load plugin config
 source ~/dotfiles/vimrc.plugins.config
