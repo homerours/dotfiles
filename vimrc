@@ -6,10 +6,10 @@
 
 " My .vimrc
 
-" PLUGINS
-source ~/dotfiles/vimrc.plugins
-
+" Numbering
+set number
 set relativenumber        " afficher le numero des lignes
+
 set tabstop=4     " number of visual spaces per tab
 set softtabstop=4 " number of spaces per tab
 set shiftwidth=4
@@ -18,54 +18,36 @@ set nospell       " disable spell checking
 set noswapfile    " no swap files are created
 set lazyredraw    " only redraw when needed
 set autoindent    " reproduit l'indentation de la ligne précédente
-set hlsearch      " highlight search results
-set incsearch     " cherche pendant qu'on tape
 set numberwidth=1 " espaces pris par les numeros de ligne
 set hidden        " buffer switching without saving
 set scrolljump=5  " Lines to scroll when cursor leaves screen
 set scrolloff=3   " Minimum lines to keep above and below cursor
-set cursorline    " highlight current line
 syntax enable     " coloration syntaxique
-
-set conceallevel=0 " json quotes
-" Neovim cursor
-set guicursor=
-
-" avoid highlighting last search when sourcing vimrc
-let @/ = ""
-
-" Colorscheme
-set t_Co=256
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"set background=dark
-"let g:solarized_termcolors = 256 
-"colorscheme solarized
-" Or if you have Neovim >= 0.1.5
-set termguicolors
-colorscheme OceanicNext
-
-" disable auto comments
-autocmd filetype * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-
 " filetype-specific indentation
 filetype indent on
 
-" open file at the same line that it was closed for the last time
-autocmd bufwinleave ?* mkview
-autocmd bufwinenter ?* silent! loadview
+" Search
+set hlsearch      " highlight search results
+set incsearch     " cherche pendant qu'on tape
+set ignorecase
+
+set cursorline    " highlight current line
+
+set conceallevel=0 " json quotes
+" Colorscheme
+colorscheme slate
+set t_Co=256
+
 
 " leaders
 let mapleader = ' '
-let maplocalleader = "'"
+let maplocalleader = ","
 
 " exit insert mode
 inoremap jk <c-o>:stopinsert<cr>
 
 noremap j gj
 noremap k gk
-
-" last edited line
-nnoremap <leader>_ '.
 
 " remove search highlighting
 nnoremap <leader>* :noh<cr>
@@ -81,52 +63,34 @@ vnoremap <leader>y "+y
 
 " save
 nnoremap <leader>w :w<cr>
+
+" Buffers / Quickfix
 nnoremap <leader>q :bd<cr>
+nnoremap <leader><tab> :b#<cr>
+nnoremap <silent> ]b :<C-u>bnext<CR>
+nnoremap <silent> [b :<C-u>bprev<CR>
+nnoremap <silent> ]q :<C-u>cnext<CR>
+nnoremap <silent> [q :<C-u>cprev<CR>
 
-" folds
-nnoremap <backspace> za
-vnoremap <backspace> zf
+" Statusline
+set laststatus=2
+set statusline=%f
+set statusline+=%m
 
-" tabs
-nnoremap <s-h> gT
-nnoremap <s-l> gt
+" PLUGINS
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'homerours/jumper.vim'
 
-" word spell
-nnoremap <leader>tc :set spell spelllang=en_us<cr>
-nnoremap <leader>tn :set nospell<cr>
-nnoremap <leader>t ]s
-hi clear spellbad
-hi spellbad cterm=underline
+"" PAIRS
+Plug 'tpope/vim-surround'
+Plug 'jiangmiao/auto-pairs'
 
-if has('statusline')
-	" cyan
-	hi user3 ctermbg=black ctermfg=237 guibg=#343d46 guifg=#EC5f67
-	" base1
-	hi user4 ctermbg=black ctermfg=235 guibg=#1b2b34 guifg=#99c794
+"" COMMENT
+Plug 'scrooloose/nerdcommenter'
 
-	set laststatus=2
-	set statusline=%3*
-	set statusline+=%<%f                     " filename
-	set statusline+=%1*
-	set statusline+=\ %w%h%m%r                 " options
-	set statusline+=%2*
-	"set statusline+=%{fugitive#statusline()} " git
-	set statusline+=%4*
-	set statusline+=\ (%{&ff}/%y)            " filetype
-	set statusline+=\ %{getcwd()}          " current dir
-	set statusline+=%=%-14.(%l,%c%v%)\ %p%%  " right aligned file nav info
-endif
+call plug#end()
 
-autocmd BufReadPre,BufNewFile *   silent execute '!jumper -f ${__JUMPER_FILES} -a ' .. expand('%:p')
-" autocmd BufReadPre *   silent execute '!echo hello leo'
-command! -nargs=+ Z :cd `jumper -f ${__JUMPER_FOLDERS} -n 1 '<args>'`
-command! -nargs=+ Zf :edit `jumper -f ${__JUMPER_FILES} -n 1 '<args>'`
-
-command! JumperFiles call fzf#run(fzf#wrap({'source': 'jumper -f ${__JUMPER_FILES} -n 150', 'options': '--reverse --ansi --disabled --bind "change:reload:sleep 0.05; jumper -f ${__JUMPER_FILES} -n 150 -c {q} || true"'}))
-command! JumperFolders call fzf#run(fzf#wrap({'source': 'jumper -f ${__JUMPER_FOLDERS} -n 150', 'options': '--reverse --ansi --disabled --bind "change:reload:sleep 0.05; jumper -f ${__JUMPER_FOLDERS} -n 150 -c {q} || true"'}))
-
-nnoremap <C-u> :JumperFiles<CR>
-nnoremap <C-y> :JumperFolders<CR>
-
-" load plugin config
-source ~/dotfiles/vimrc.plugins.config
+" FZF
+nmap <C-p> :FZF<CR>
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.9  }  }

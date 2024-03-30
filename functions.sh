@@ -13,7 +13,7 @@ function ff() {
 function fu() {
     RG_PREFIX="jumper -f ${__JUMPER_FILES} '' | xargs rg -i --column --line-number --color=always "
     INITIAL_QUERY=''
-    fzf --ansi --disabled --query "$INITIAL_QUERY" \
+    fzf --ansi --disabled --reverse --query "$INITIAL_QUERY" \
     --bind "start:reload:$RG_PREFIX {q}" \
     --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
     --delimiter : \
