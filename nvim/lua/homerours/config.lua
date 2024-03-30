@@ -10,6 +10,7 @@ vim.opt.relativenumber = true
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
+vim.opt.ignorecase = true
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -24,3 +25,4 @@ vim.g.netrw_liststyle = 3 -- Tree-style view
 vim.g.netrw_winsize = 20
 
 vim.opt.scrolloff = 8
+vim.opt.mouse = ""

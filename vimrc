@@ -23,8 +23,7 @@ set hidden        " buffer switching without saving
 set scrolljump=5  " Lines to scroll when cursor leaves screen
 set scrolloff=3   " Minimum lines to keep above and below cursor
 syntax enable     " coloration syntaxique
-" filetype-specific indentation
-filetype indent on
+filetype indent on " filetype-specific indentation
 
 " Search
 set hlsearch      " highlight search results
@@ -33,11 +32,12 @@ set ignorecase
 
 set cursorline    " highlight current line
 
-set conceallevel=0 " json quotes
 " Colorscheme
-colorscheme slate
-set t_Co=256
+colorscheme sorbet
+"colorscheme habamax
 
+" New line after comment is not commented
+autocmd BufNewFile,BufRead * setlocal formatoptions-=cro
 
 " leaders
 let mapleader = ' '
@@ -71,6 +71,13 @@ nnoremap <silent> ]b :<C-u>bnext<CR>
 nnoremap <silent> [b :<C-u>bprev<CR>
 nnoremap <silent> ]q :<C-u>cnext<CR>
 nnoremap <silent> [q :<C-u>cprev<CR>
+
+" Windows
+nnoremap <silent> <C-h> <C-w>h
+nnoremap <silent> <C-j> <C-w>j
+nnoremap <silent> <C-k> <C-w>k
+nnoremap <silent> <C-l> <C-w>l
+
 
 " Statusline
 set laststatus=2

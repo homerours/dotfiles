@@ -19,7 +19,13 @@ vim.keymap.set("n", "<leader>w", ":w<CR>")
 vim.keymap.set("n", "<leader>q", ":bd<CR>")
 -- open last buffer
 vim.keymap.set("n", "<leader><Tab>", ":b#<CR>")
+-- buffers, quickfix
+vim.keymap.set("n", "[b", ":bprev<CR>")
+vim.keymap.set("n", "]b", ":bnext<CR>")
+vim.keymap.set("n", "[q", ":cprev<CR>")
+vim.keymap.set("n", "]q", ":cnext<CR>")
 
+-- Windows
 vim.keymap.set("n", "<C-h>", "<C-w>h")
 vim.keymap.set("n", "<C-j>", "<C-w>j")
 vim.keymap.set("n", "<C-k>", "<C-w>k")
@@ -30,6 +36,7 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "<C-f>", "<C-f>zz")
 vim.keymap.set("n", "<C-b>", "<C-b>zz")
+
 
 -- paste without loosing register
 vim.keymap.set("x", "<leader>p", [["_dP]])
@@ -47,4 +54,3 @@ vim.keymap.set("", "<up>", "<nop>", { noremap = true })
 vim.keymap.set("", "<down>", "<nop>", { noremap = true })
 vim.keymap.set("i", "<up>", "<nop>", { noremap = true })
 vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
-vim.opt.mouse = ""
