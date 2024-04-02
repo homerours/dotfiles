@@ -1,14 +1,8 @@
-"   | | | (_)
-"   | | | |_ _ __ ___  _ __ ___
-"   | | | | | '_ ` _ \| '__/ __|
-"   \ \_/ / | | | | | | | | (__
-"    \___/|_|_| |_| |_|_|  \___|)
-
 " My .vimrc
 
 " Numbering
 set number
-set relativenumber        " afficher le numero des lignes
+set relativenumber
 
 set tabstop=4     " number of visual spaces per tab
 set softtabstop=4 " number of spaces per tab
@@ -67,17 +61,20 @@ nnoremap <leader>w :w<cr>
 " Buffers / Quickfix
 nnoremap <leader>q :bd<cr>
 nnoremap <leader><tab> :b#<cr>
-nnoremap <silent> ]b :<C-u>bnext<CR>
-nnoremap <silent> [b :<C-u>bprev<CR>
-nnoremap <silent> ]q :<C-u>cnext<CR>
-nnoremap <silent> [q :<C-u>cprev<CR>
+nnoremap ]b :<C-u>bnext<CR>
+nnoremap [b :<C-u>bprev<CR>
+nnoremap ]q :<C-u>cnext<CR>
+nnoremap [q :<C-u>cprev<CR>
 
 " Windows
-nnoremap <silent> <C-h> <C-w>h
-nnoremap <silent> <C-j> <C-w>j
-nnoremap <silent> <C-k> <C-w>k
-nnoremap <silent> <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
+" Tabs
+nnoremap L :tabn<CR>
+nnoremap H :tabp<CR>
 
 " Statusline
 set laststatus=2
