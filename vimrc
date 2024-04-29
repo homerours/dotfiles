@@ -18,6 +18,7 @@ set scrolljump=5  " Lines to scroll when cursor leaves screen
 set scrolloff=3   " Minimum lines to keep above and below cursor
 syntax enable     " coloration syntaxique
 filetype indent on " filetype-specific indentation
+set wildmenu
 
 " Search
 set hlsearch      " highlight search results
@@ -81,9 +82,11 @@ set laststatus=2
 set statusline=%f
 set statusline+=%m
 
+" Plug 'homerours/jumper.vim'
 " PLUGINS
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug '/Users/leo/Documents/dev/jumper.vim'
 Plug 'homerours/jumper.vim'
 
 "" PAIRS

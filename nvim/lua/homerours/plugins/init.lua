@@ -6,13 +6,26 @@ return {
         opts = {}
     },
     {
-        "homerours/telescope-jumper",
-        dependencies = { 'nvim-telescope/telescope.nvim' },
+        "ibhagwan/fzf-lua",
+    },
+    {
+        -- dir = "/Users/leo/Documents/dev/jumper.nvim",
+        "homerours/jumper.nvim",
+        dependencies = { 'nvim-telescope/telescope.nvim', "ibhagwan/fzf-lua" },
         config = function()
-            local jumper = require("telescope").extensions.jumper
-            vim.keymap.set('n', '<c-y>', jumper.jump_to_folder, {})
-            vim.keymap.set('n', '<c-u>', jumper.jump_to_file, {})
-            vim.keymap.set('n', '<leader>fu', jumper.find_in_files, {})
+            -- local jumper = require("telescope").extensions.jumper
+            local jumper = require("jumper.fzf-lua")
+            vim.keymap.set('n', '<c-y>', function() jumper.jump_to_directory({ on_enter = 'find_files' }) end)
+            vim.keymap.set('n', '<c-u>', jumper.jump_to_file)
+            vim.keymap.set('n', '<leader>fu', jumper.find_in_files)
+
+            require("jumper").set_preferences({
+                jumper_max_results = 200,
+                jumper_max_completion_results = 10,
+                previewer=false
+                -- jumper_files = '/path/to/a/custom/file/database',
+                -- jumper_directories = '/path/to/a/custom/directory/database',
+            })
         end,
     },
     'tpope/vim-surround',

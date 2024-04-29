@@ -4,6 +4,7 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
         local builtin = require('telescope.builtin')
+        local layout_actions = require('telescope.actions.layout')
         vim.keymap.set('n', '<c-p>', builtin.find_files, {})
         vim.keymap.set('n', '<leader>ff', builtin.live_grep, {})
         vim.keymap.set('n', '<leader>fh', builtin.command_history, {})
@@ -29,7 +30,8 @@ return {
                         ["<C-j>"] = actions.move_selection_next,
                         ["<C-k>"] = actions.move_selection_previous,
                         ["<C-t>"] = actions.file_tab,
-                        ["<C-e>"] = actions.file_edit
+                        ["<C-e>"] = actions.file_edit,
+                        ["<C-p>"] = layout_actions.toggle_preview
                     }
                 }
             }
