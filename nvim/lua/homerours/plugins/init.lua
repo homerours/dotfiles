@@ -19,12 +19,12 @@ return {
             vim.keymap.set('n', '<c-u>', jumper.jump_to_file)
             vim.keymap.set('n', '<leader>fu', jumper.find_in_files)
 
-            require("jumper").set_preferences({
+            require("jumper").setup({
                 jumper_max_results = 300,
-                jumper_max_completion_results = 10,
-                previewer=false
+                jumper_max_completion_results = 3,
+                previewer=false,
                 -- jumper_files = '/path/to/a/custom/file/database',
-                -- jumper_directories = '/path/to/a/custom/directory/database',
+                -- jumper_directories = '/Users/leo/datatest',
             })
         end,
     },
