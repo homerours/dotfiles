@@ -9,8 +9,8 @@ return {
         "ibhagwan/fzf-lua",
     },
     {
-        dir = "/Users/leo/Documents/dev/jumper.nvim",
-        -- "homerours/jumper.nvim",
+        -- dir = "/Users/leo/Documents/dev/jumper.nvim",
+        "homerours/jumper.nvim",
         dependencies = { 'nvim-telescope/telescope.nvim', "ibhagwan/fzf-lua" },
         config = function()
             -- local jumper = require("telescope").extensions.jumper
