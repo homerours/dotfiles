@@ -10,7 +10,6 @@ vim.opt.relativenumber = true
 
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-vim.opt.ignorecase = true
 
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4

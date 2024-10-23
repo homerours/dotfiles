@@ -86,8 +86,8 @@ set statusline+=%m
 " PLUGINS
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug '/Users/leo/Documents/dev/jumper.vim'
-" Plug 'homerours/jumper.vim'
+"Plug '/Users/leo/Documents/dev/jumper.vim'
+Plug 'homerours/jumper.vim'
 
 "" PAIRS
 Plug 'tpope/vim-surround'
