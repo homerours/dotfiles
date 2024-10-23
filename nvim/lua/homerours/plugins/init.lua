@@ -22,7 +22,6 @@ return {
             require("jumper").setup({
                 jumper_max_results = 300,
                 jumper_max_completion_results = 3,
-                previewer=false,
                 -- jumper_files = '/path/to/a/custom/file/database',
                 -- jumper_directories = '/Users/leo/datatest',
             })

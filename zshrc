@@ -1,6 +1,6 @@
 source ~/dotfiles/shellrc.sh
 # Jumper
-source ~/Documents/dev/jumper/shell/jumper.zsh
+source <(jumper shell zsh)
 
 # Case-insensitive completion on mac
 autoload -Uz compinit && compinit

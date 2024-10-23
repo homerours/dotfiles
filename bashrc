@@ -2,7 +2,9 @@ source ~/dotfiles/shellrc.sh
 # Jumper
 # export __JUMPER_FOLDERS=~/folders
 # __JUMPER_FZF_FILES_PREVIEW='cat'
-source ~/Documents/dev/jumper/shell/jumper.bash
+# source ~/Documents/dev/jumper/shell/jumper.bash
+eval "$(jumper shell bash)"
+
 # Terminal Colors
 export CLICOLOR=1
 
