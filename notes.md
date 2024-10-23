@@ -52,3 +52,23 @@ zip -r archive.zip *
 - `pdftk in.pdf cat 1-endwest output out.pdf` (rotate 90 trigo)
 - `pdftk in.pdf cat 1-10 12-end output out.pdf` (remove page 11)
 _ `convert -density 400 -quality 95 xxx.pdf xxx.jpg`
+
+## Arch
+
+solve vm-linuz not found at boot
+1. Boot to a arch live usb
+2. Run `fdisk -l`
+```
+Device        Start       End   Sectors  Size Type
+/dev/sda1      2048   1050623   1048576  512M EFI System
+/dev/sda2   1050624  17827839  16777216    8G Linux swap
+/dev/sda3  17827840  91228159  73400320   35G Linux filesystem
+/dev/sda4  91228160 500118158 408889999  195G Linux filesystem
+```
+3. Run
+```bash
+mount /dev/sda3 /mnt
+mount /dev/sda1 /mnt/boot
+```
+4. Chroot: `arch-chroot`
+5. reinstall `pacman -S mkinitcpio systemd linux`
