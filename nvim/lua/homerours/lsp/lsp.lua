@@ -3,6 +3,7 @@ return {
     config = function()
         -- Configure diagnostic signs
         vim.diagnostic.config({
+            virtual_text = true,
             signs = {
                 text = {
                     [vim.diagnostic.severity.ERROR] = 'E',
@@ -37,8 +38,8 @@ return {
         end
 
         -- Setup LSP servers using new vim.lsp.config API
-        vim.lsp.config('pyright', {
-            cmd = { 'pyright-langserver', '--stdio' },
+        vim.lsp.config('basedpyright', {
+            cmd = { 'basedpyright-langserver', '--stdio' },
             root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt', '.git' },
             capabilities = capabilities,
             on_attach = on_attach,
@@ -70,9 +71,18 @@ return {
             on_attach = on_attach,
         })
 
+        vim.lsp.config('bashls', {
+            cmd = { 'bash-language-server', 'start' },
+            root_markers = { '.git' },
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { 'sh', 'bash' },
+        })
+
         -- Enable LSP servers
-        vim.lsp.enable('pyright')
+        vim.lsp.enable('basedpyright')
         vim.lsp.enable('lua_ls')
         vim.lsp.enable('ccls')
+        vim.lsp.enable('bashls')
     end
 }
