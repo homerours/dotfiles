@@ -29,10 +29,7 @@ setopt PROMPT_SUBST
 PROMPT='%F{magenta}%n%F{base}@%F{yellow}%m%F{blue}|%F{green}%~%F{base}$(git_prompt)
 $ '
 
-# Fuzzy finder
-if [ -f ~/.fzf.zsh ]
-then
-	zle     -N   fzf-file-widget
-	bindkey '^P' fzf-file-widget
-	source ~/.fzf.zsh
-fi
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+zle     -N   fzf-file-widget
+bindkey '^P' fzf-file-widget

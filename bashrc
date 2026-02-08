@@ -21,10 +21,8 @@ export PROMPT_COMMAND="history -a; history -c; history -r;${PROMPT_COMMAND}"
 shopt -s checkwinsize
 shopt -s cdspell
 
-# FZF fuzzy finder
-if [ -f ~/.fzf.bash ]; then
-	source ~/.fzf.bash
-	bind -x '"\C-p": "fzf-file-widget"'
-fi
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --bash)"
+bind -x '"\C-p": "fzf-file-widget"'
 
 PS1="${MAGENTA}\u${BASE0}@${YELLOW}\h${BASE0}|${CYAN}\w${BASE0}\$(git_prompt)${RESET}\n\$ "
