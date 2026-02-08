@@ -83,6 +83,16 @@ return {
             root_markers = { 'compile_commands.json', '.ccls', '.git' },
             capabilities = capabilities,
             on_attach = on_attach,
+            init_options = {
+                clang = {
+                    extraArgs = {
+                        "-isystem", "/usr/local/include",
+                        "-isystem", "/Library/Developer/CommandLineTools/usr/lib/clang/17/include",
+                        "-isystem", "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
+                        "-isystem", "/Library/Developer/CommandLineTools/usr/include",
+                    },
+                },
+            },
         })
 
         vim.lsp.config('bashls', {
