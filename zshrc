@@ -1,3 +1,6 @@
+# Use Homebrew git (2x faster than Apple's)
+export PATH="/usr/local/bin:$PATH"
+
 source ~/dotfiles/shellrc.sh
 # Jumper
 source <(jumper shell zsh)
