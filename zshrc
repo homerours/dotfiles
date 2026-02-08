@@ -1,6 +1,12 @@
 # Use Homebrew git (2x faster than Apple's)
 export PATH="/usr/local/bin:$PATH"
 
+# Initialize gitstatus for super fast git prompt
+if [[ -f /usr/local/opt/gitstatus/gitstatus.plugin.zsh ]]; then
+    source /usr/local/opt/gitstatus/gitstatus.plugin.zsh
+    gitstatus_start MY
+fi
+
 source ~/dotfiles/shellrc.sh
 # Jumper
 source <(jumper shell zsh)

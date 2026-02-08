@@ -1,5 +1,31 @@
 #!/bin/bash
+
 git_prompt(){
+    # Try gitstatus first (if available and functions are loaded)
+    if type gitstatus_query &>/dev/null; then
+        # Bash: no name parameter, zsh: requires 'MY' name parameter
+        if [[ -n "$BASH_VERSION" ]]; then
+            gitstatus_query -d "$PWD" || return
+        else
+            gitstatus_query MY || return
+        fi
+
+        local branch="$VCS_STATUS_LOCAL_BRANCH"
+        [[ -z "$branch" ]] && branch="${VCS_STATUS_COMMIT:0:7}"
+
+        local dirty=""
+        # Check if there are any changes (staged, unstaged, or untracked)
+        if [[ "$VCS_STATUS_HAS_STAGED" == "1" ]] ||
+           [[ "$VCS_STATUS_HAS_UNSTAGED" == "1" ]] ||
+           [[ "$VCS_STATUS_HAS_UNTRACKED" == "1" ]]; then
+            dirty="!"
+        fi
+
+        echo -e "${BASE0} on ${GREEN}${branch}${MAGENTA}${dirty}${RESET}"
+        return
+    fi
+
+    # Fallback to manual git commands
     # Check if in git repo (using shell builtin test)
     [[ -d .git ]] || git rev-parse --git-dir &>/dev/null || return
 
@@ -16,8 +42,7 @@ git_prompt(){
         return
     fi
 
-    # Fast dirty check: compare index modification time with working tree
-    # This is approximate but very fast
+    # Fast dirty check
     local dirty=""
     if [[ -n $(git status --porcelain 2>/dev/null | head -1) ]]; then
         dirty="!"
