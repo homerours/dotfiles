@@ -17,6 +17,9 @@ return {
         -- Common on_attach function for all LSP servers
         local on_attach = function(client, bufnr)
             local opts = { buffer = bufnr, remap = false }
+
+
+            -- LSP navigation
             vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
             vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, opts)
             vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
@@ -28,6 +31,17 @@ return {
             vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
             vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
             vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+
+            -- Check if fzf-lua is available
+            local has_fzf, fzf = pcall(require, 'fzf-lua')
+            -- fzf-lua LSP pickers (if available)
+            if has_fzf then
+                -- vim.keymap.set("n", "<leader>tr", fzf.lsp_definitions, opts)
+                vim.keymap.set("n", "<leader>ti", fzf.lsp_implementations, opts)
+                vim.keymap.set("n", "<leader>tr", fzf.lsp_references, opts)
+                vim.keymap.set("n", "<leader>fm", fzf.lsp_document_symbols, opts)
+                vim.keymap.set("n", "<leader>fwm", fzf.lsp_workspace_symbols, opts)
+            end
         end
 
         -- Get default capabilities for nvim-cmp
