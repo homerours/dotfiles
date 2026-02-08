@@ -6,9 +6,6 @@ return {
         opts = {}
     },
     {
-        "ibhagwan/fzf-lua",
-    },
-    {
         "homerours/jumper.nvim",
         dependencies = { "ibhagwan/fzf-lua" },
         config = function()
