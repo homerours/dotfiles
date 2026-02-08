@@ -10,6 +10,9 @@ git_prompt(){
             gitstatus_query MY || return
         fi
 
+        # Check if we're actually in a git repo
+        [[ "$VCS_STATUS_RESULT" == "ok-sync" ]] || return
+
         local branch="$VCS_STATUS_LOCAL_BRANCH"
         [[ -z "$branch" ]] && branch="${VCS_STATUS_COMMIT:0:7}"
 
