@@ -8,9 +8,10 @@ return {
     {
         dir="/Users/leo/Documents/dev/jumper.nvim",
         -- "homerours/jumper.nvim",
-        dependencies = { "ibhagwan/fzf-lua" },
+        dependencies = { "ibhagwan/fzf-lua"},
         config = function()
             local jumper = require("jumper.fzf-lua")
+            -- local jumper = require("telescope").extensions.jumper
             vim.keymap.set('n', '<c-y>', function() jumper.jump_to_directory({ on_enter = 'find_files' }) end)
             vim.keymap.set('n', '<c-u>', jumper.jump_to_file)
             vim.keymap.set('n', '<leader>fu', jumper.find_in_files)

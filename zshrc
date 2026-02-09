@@ -1,10 +1,11 @@
 source ~/dotfiles/shellrc.sh
-# Jumper
-source <(jumper shell zsh)
 
 # Case-insensitive completion on mac
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+# Jumper (must come AFTER compinit)
+source <(jumper shell zsh)
 #
 # VIM MODE
 bindkey -v
