@@ -19,7 +19,7 @@ function install_vim_plug() {
 
 function symlink_dotfiles() {
     mkdir -p $olddir
-    files=(vimrc zshrc tmux.conf gitconfig bashrc inputrc dircolors.ansi-dark)
+    files=(vimrc zshrc tmux.conf gitconfig bashrc inputrc dircolors.ansi-dark vscodevimrc)
     for file in $files
     do
         mv ~/.$file $olddir &> /dev/null
