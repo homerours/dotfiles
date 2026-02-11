@@ -6,6 +6,9 @@ return {
         opts = {}
     },
     {
+        'ibhagwan/smartyank.nvim'
+    },
+    {
         dir="/Users/leo/Documents/dev/jumper.nvim",
         -- "homerours/jumper.nvim",
         dependencies = { "ibhagwan/fzf-lua"},
