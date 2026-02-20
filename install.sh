@@ -1,50 +1,79 @@
-#!/bin/bash
-echo 'Functions available:'
-echo -e "    - ${GREEN}install_vim_plug${RESET}"
-echo -e "    - ${GREEN}symlink_dotfiles${RESET}"
-echo -e "    - ${GREEN}symlink_nvim${RESET}"
-echo -e "    - ${GREEN}symlink_kitty${RESET}"
-echo ''
+#!/bin/sh
+set -e
 
-# directories
-dotfiles=~/dotfiles
-olddir=~/dotfiles_old
-nvim_folder=~/.config/nvim
-kitty_folder=~/.config/kitty
+DOTFILES="$HOME/dotfiles"
+BACKUP="$HOME/dotfiles_old"
+GREEN="\033[0;32m"
+RED="\033[0;31m"
+RESET="\033[m"
 
-function install_vim_plug() {
-    echo "Installing vim-plug"
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+info() { printf "${GREEN}[+]${RESET} %s\n" "$1"; }
+warn() { printf "${RED}[!]${RESET} %s\n" "$1"; }
+
+link() {
+    src="$1"
+    dst="$2"
+    if [ -L "$dst" ]; then
+        rm "$dst"
+    elif [ -e "$dst" ]; then
+        mkdir -p "$BACKUP"
+        mv "$dst" "$BACKUP/$(basename "$dst").$(date +%s)"
+        warn "Backed up existing $dst"
+    fi
+    ln -s "$src" "$dst"
+    info "Linked $dst -> $src"
 }
 
-function symlink_dotfiles() {
-    mkdir -p $olddir
-    files=(vimrc zshrc tmux.conf gitconfig bashrc inputrc dircolors.ansi-dark vscodevimrc)
-    for file in $files
-    do
-        mv ~/.$file $olddir &> /dev/null
-        echo "Creating symlink to $file in home directory."
-        ln -s ${dotfiles}/$file ~/.$file
+symlink_dotfiles() {
+    for file in bashrc zshrc tmux.conf gitconfig inputrc dircolors.ansi-dark vscodevimrc; do
+        [ -f "$DOTFILES/$file" ] && link "$DOTFILES/$file" "$HOME/.$file"
     done
 }
 
-function symlink_nvim() {
-    mkdir -p "${olddir}/nvim"
-    mkdir -p $nvim_folder
-    mv ${nvim_folder}/* "${olddir}/nvim"
-    symlinks=(init.lua lua after)
-    for f in $symlinks
-    do
-        ln -s "${dotfiles}/nvim/$f" "${nvim_folder}/$f" 
+symlink_nvim() {
+    mkdir -p "$HOME/.config/nvim"
+    for f in init.lua lua; do
+        [ -e "$DOTFILES/nvim/$f" ] && link "$DOTFILES/nvim/$f" "$HOME/.config/nvim/$f"
     done
 }
 
-function symlink_kitty() {
-    mkdir -p "${olddir}/kitty"
-    mv ${kitty_folder}/* "${olddir}/kitty"
-    symlinks=(kitty.conf homerours.conf)
-    for f in $symlinks
-    do
-        ln -s "${dotfiles}/kitty/$f" "${kitty_folder}/$f" 
+symlink_kitty() {
+    mkdir -p "$HOME/.config/kitty"
+    for f in kitty.conf homerours.conf; do
+        [ -e "$DOTFILES/kitty/$f" ] && link "$DOTFILES/kitty/$f" "$HOME/.config/kitty/$f"
     done
 }
+
+usage() {
+    echo "Usage: ./install.sh [target...]"
+    echo ""
+    echo "Targets:"
+    echo "  all         Install everything"
+    echo "  dotfiles    Symlink shell dotfiles (bashrc, zshrc, ...)"
+    echo "  nvim        Symlink neovim config"
+    echo "  kitty       Symlink kitty config"
+    echo ""
+    echo "With no arguments, installs everything."
+}
+
+if [ $# -eq 0 ]; then
+    set -- all
+fi
+
+for target in "$@"; do
+    case "$target" in
+        all)
+            symlink_dotfiles
+            symlink_nvim
+            symlink_kitty
+            ;;
+        dotfiles)  symlink_dotfiles ;;
+        nvim)      symlink_nvim ;;
+        kitty)     symlink_kitty ;;
+
+        -h|--help) usage; exit 0 ;;
+        *)         warn "Unknown target: $target"; usage; exit 1 ;;
+    esac
+done
+
+info "Done!"

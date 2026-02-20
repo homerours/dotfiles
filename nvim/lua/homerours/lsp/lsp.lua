@@ -14,35 +14,34 @@ return {
             }
         })
 
-        -- Common on_attach function for all LSP servers
-        local on_attach = function(client, bufnr)
-            local opts = { buffer = bufnr, remap = false }
+        -- LSP keymaps via LspAttach autocmd
+        vim.api.nvim_create_autocmd('LspAttach', {
+            callback = function(args)
+                local opts = { buffer = args.buf, remap = false }
 
+                -- LSP navigation
+                vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+                vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, opts)
+                vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+                vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+                vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
+                vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+                vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+                vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
+                vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-            -- LSP navigation
-            vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-            vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, opts)
-            vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-            vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-            vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-            vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
-            vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-            vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-            vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-            vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
-            vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-
-            -- Check if fzf-lua is available
-            local has_fzf, fzf = pcall(require, 'fzf-lua')
-            -- fzf-lua LSP pickers (if available)
-            if has_fzf then
-                -- vim.keymap.set("n", "<leader>tr", fzf.lsp_definitions, opts)
-                vim.keymap.set("n", "<leader>ti", fzf.lsp_implementations, opts)
-                vim.keymap.set("n", "<leader>tr", fzf.lsp_references, opts)
-                vim.keymap.set("n", "<leader>fm", fzf.lsp_document_symbols, opts)
-                vim.keymap.set("n", "<leader>fwm", fzf.lsp_workspace_symbols, opts)
+                -- fzf-lua LSP pickers (if available)
+                local has_fzf, fzf = pcall(require, 'fzf-lua')
+                if has_fzf then
+                    vim.keymap.set("n", "<leader>ti", fzf.lsp_implementations, opts)
+                    vim.keymap.set("n", "<leader>tr", fzf.lsp_references, opts)
+                    vim.keymap.set("n", "<leader>fm", fzf.lsp_document_symbols, opts)
+                    vim.keymap.set("n", "<leader>fwm", fzf.lsp_workspace_symbols, opts)
+                end
             end
-        end
+        })
 
         -- Get default capabilities for nvim-cmp
         local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -51,19 +50,17 @@ return {
             capabilities = vim.tbl_deep_extend('force', capabilities, cmp_nvim_lsp.default_capabilities())
         end
 
-        -- Setup LSP servers using new vim.lsp.config API
+        -- Setup LSP servers
         vim.lsp.config('basedpyright', {
             cmd = { 'basedpyright-langserver', '--stdio' },
             root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt', '.git' },
             capabilities = capabilities,
-            on_attach = on_attach,
         })
 
         vim.lsp.config('lua_ls', {
             cmd = { 'lua-language-server' },
             root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
             capabilities = capabilities,
-            on_attach = on_attach,
             settings = {
                 Lua = {
                     diagnostics = {
@@ -82,7 +79,6 @@ return {
             cmd = { 'ccls' },
             root_markers = { 'compile_commands.json', '.ccls', '.git' },
             capabilities = capabilities,
-            on_attach = on_attach,
             init_options = {
                 clang = {
                     extraArgs = {
@@ -99,7 +95,6 @@ return {
             cmd = { 'bash-language-server', 'start' },
             root_markers = { '.git' },
             capabilities = capabilities,
-            on_attach = on_attach,
             filetypes = { 'sh', 'bash' },
         })
 
