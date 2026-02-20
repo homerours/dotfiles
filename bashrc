@@ -2,9 +2,6 @@ source ~/dotfiles/shellrc.sh
 # Jumper
 eval "$(jumper shell bash)"
 
-# Terminal Colors
-export CLICOLOR=1
-
 # Bash History Options
 export HISTSIZE=1000000
 export HISTCONTROL='ignoreboth'
@@ -12,8 +9,8 @@ export HISTIGNORE='&:ls:[bf]g:exit'
 export HISTTIMEFORMAT='%b %d %H:%M:%S: '
 
 shopt -s histappend
-set cmdhist
-export PROMPT_COMMAND="history -a; history -c; history -r;${PROMPT_COMMAND}"
+shopt -s cmdhist
+export PROMPT_COMMAND="history -a;${PROMPT_COMMAND}"
 
 shopt -s checkwinsize
 shopt -s cdspell
