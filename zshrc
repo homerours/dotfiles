@@ -1,7 +1,12 @@
 source ~/dotfiles/shellrc.sh
 
-# Case-insensitive completion on mac
-autoload -Uz compinit && compinit
+# Case-insensitive completion on mac (rebuild dump only once per day)
+autoload -Uz compinit
+if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
+    compinit
+else
+    compinit -C
+fi
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 # Jumper (must come AFTER compinit)
