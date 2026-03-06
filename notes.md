@@ -1,5 +1,32 @@
 # Notes
 
+# Update arch after long time
+
+# 1. Reset the keyring (it will be expired after a year)
+sudo rm -rf /etc/pacman.d/gnupg
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
+
+# 2. Update keyring first
+sudo pacman -Sy archlinux-keyring
+
+# 3. Full upgrade
+sudo pacman -Su
+
+If step 3 fails with file conflicts, read the error and usually:
+
+sudo pacman -Su --overwrite '*'
+
+If it fails with dependency issues, sometimes you need to force-upgrade specific packages together:
+
+sudo pacman -Su --needed package1 package2
+
+Important: don't reboot until the upgrade completes successfully. If it fails midway, fix it and re-run pacman -Su until it finishes clean.
+
+That said — skipping the news for a year is always a gamble on Arch. If you don't want that maintenance burden, consider a more stable distro like Fedora or Debian for machines
+you don't touch often.
+
+
 ## Git
 - Password cache
 `git config --global credential.helper "cache --timeout=3600"`
