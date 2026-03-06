@@ -2,29 +2,53 @@
 
 # Update arch after long time
 
-# 1. Reset the keyring (it will be expired after a year)
+## 1. Reset the keyring (it will be expired after a year)
+```bash
 sudo rm -rf /etc/pacman.d/gnupg
 sudo pacman-key --init
 sudo pacman-key --populate archlinux
+```
 
-# 2. Update keyring first
+## 2. Update keyring first
+```bash
 sudo pacman -Sy archlinux-keyring
+```
 
-# 3. Full upgrade
-sudo pacman -Su
+## 3. Full upgrade
+```bash
+sudo pacman -Syu --overwrite '*'
+```
 
-If step 3 fails with file conflicts, read the error and usually:
+## If signature/trust errors persist
+Temporarily disable signature checking in `/etc/pacman.conf`:
+```
+SigLevel = Never
+```
+Run the upgrade, then restore it to:
+```
+SigLevel = Required DatabaseOptional
+```
+And reinitialize the keyring:
+```bash
+sudo rm -rf /etc/pacman.d/gnupg
+sudo pacman-key --init
+sudo pacman-key --populate archlinux
+```
 
-sudo pacman -Su --overwrite '*'
+## If wifi/drivers are missing after a failed upgrade
+Firmware may have been lost. Download the package from a mirror on another machine:
+- Go to `https://geo.mirror.pkgbuild.com/core/os/x86_64/`
+- For Intel wifi: download `linux-firmware-intel-*.pkg.tar.zst` and `linux-firmware-whence-*.pkg.tar.zst`
+- Transfer via USB and install:
+```bash
+sudo pacman -U /mnt/linux-firmware-whence-*.pkg.tar.zst /mnt/linux-firmware-intel-*.pkg.tar.zst
+sudo modprobe -r iwlwifi && sudo modprobe iwlwifi
+```
 
-If it fails with dependency issues, sometimes you need to force-upgrade specific packages together:
-
-sudo pacman -Su --needed package1 package2
-
-Important: don't reboot until the upgrade completes successfully. If it fails midway, fix it and re-run pacman -Su until it finishes clean.
-
-That said — skipping the news for a year is always a gamble on Arch. If you don't want that maintenance burden, consider a more stable distro like Fedora or Debian for machines
-you don't touch often.
+## Important
+- Don't reboot until the upgrade completes successfully
+- If it fails midway, fix it and re-run `pacman -Syu` until it finishes clean
+- Clear corrupted cached packages with `sudo pacman -Scc` before retrying
 
 
 ## Git
