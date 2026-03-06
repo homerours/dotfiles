@@ -9,8 +9,8 @@ return {
         'ibhagwan/smartyank.nvim'
     },
     {
-        dir="/Users/leo/Documents/dev/jumper.nvim",
-        -- "homerours/jumper.nvim",
+        -- dir="/Users/leo/Documents/dev/jumper.nvim",
+        "homerours/jumper.nvim",
         dependencies = { "ibhagwan/fzf-lua"},
         config = function()
             local jumper = require("jumper.fzf-lua")

@@ -11,7 +11,10 @@ return {
                 local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
                 if not lang then return end
                 if not pcall(vim.treesitter.language.inspect, lang) then
-                    require('nvim-treesitter.install').install({ lang })
+                    local parsers = require('nvim-treesitter.parsers')
+                    if parsers.get_parser_configs()[lang] then
+                        pcall(vim.cmd, 'TSInstall ' .. lang)
+                    end
                     return
                 end
                 pcall(vim.treesitter.start)
@@ -19,56 +22,58 @@ return {
         })
 
         -- Textobjects config (handled by nvim-treesitter-textobjects)
-        require('nvim-treesitter-textobjects').setup {
-            select = {
-                enable = true,
-                lookahead = true,
+        require('nvim-treesitter.configs').setup {
+            textobjects = {
+                select = {
+                    enable = true,
+                    lookahead = true,
 
-                keymaps = {
-                    -- function
-                    ["am"] = "@function.outer",
-                    ["im"] = "@function.inner",
+                    keymaps = {
+                        -- function
+                        ["am"] = "@function.outer",
+                        ["im"] = "@function.inner",
 
-                    -- conditional
-                    ["ai"] = "@conditional.outer",
-                    ["ii"] = "@conditional.inner",
+                        -- conditional
+                        ["ai"] = "@conditional.outer",
+                        ["ii"] = "@conditional.inner",
 
-                    -- loop
-                    ["al"] = "@loop.outer",
-                    ["il"] = "@loop.inner",
+                        -- loop
+                        ["al"] = "@loop.outer",
+                        ["il"] = "@loop.inner",
 
-                    -- class
-                    ["ac"] = "@class.outer",
-                    ["ic"] = "@class.inner",
+                        -- class
+                        ["ac"] = "@class.outer",
+                        ["ic"] = "@class.inner",
+                    },
                 },
-            },
-            move = {
-                enable = true,
-                set_jumps = true,
-                goto_next_start = {
-                    ["]m"] = "@function.outer",
-                    ["]c"] = "@class.outer",
-                    ["]i"] = "@conditional.outer",
-                    ["]l"] = "@loop.outer",
+                move = {
+                    enable = true,
+                    set_jumps = true,
+                    goto_next_start = {
+                        ["]m"] = "@function.outer",
+                        ["]c"] = "@class.outer",
+                        ["]i"] = "@conditional.outer",
+                        ["]l"] = "@loop.outer",
+                    },
+                    goto_next_end = {
+                        ["]M"] = "@function.outer",
+                        ["]C"] = "@class.outer",
+                        ["]I"] = "@conditional.outer",
+                        ["]L"] = "@loop.outer",
+                    },
+                    goto_previous_start = {
+                        ["[m"] = "@function.outer",
+                        ["[c"] = "@class.outer",
+                        ["[i"] = "@conditional.outer",
+                        ["[l"] = "@loop.outer",
+                    },
+                    goto_previous_end = {
+                        ["[M"] = "@function.outer",
+                        ["[C"] = "@class.outer",
+                        ["[I"] = "@conditional.outer",
+                        ["[L"] = "@loop.outer",
+                    }
                 },
-                goto_next_end = {
-                    ["]M"] = "@function.outer",
-                    ["]C"] = "@class.outer",
-                    ["]I"] = "@conditional.outer",
-                    ["]L"] = "@loop.outer",
-                },
-                goto_previous_start = {
-                    ["[m"] = "@function.outer",
-                    ["[c"] = "@class.outer",
-                    ["[i"] = "@conditional.outer",
-                    ["[l"] = "@loop.outer",
-                },
-                goto_previous_end = {
-                    ["[M"] = "@function.outer",
-                    ["[C"] = "@class.outer",
-                    ["[I"] = "@conditional.outer",
-                    ["[L"] = "@loop.outer",
-                }
             },
         }
 
