@@ -1,10 +1,5 @@
-vim.g.mapleader = " "
 vim.keymap.set("i", "jk", "<c-o>:stopinsert<CR>")
--- vim.keymap.set("v", "jk", "<esc>")
 
--- vim.keymap.set("n", "<leader>e", vim.cmd.Vex)
--- close all other windows
--- vim.keymap.set("n", "<leader>o", ":only<CR>")
 -- remove search highlighting
 vim.keymap.set("n", "<leader>*", ":noh<CR>")
 
@@ -49,8 +44,8 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "<S-h>", "gT")
 vim.keymap.set("n", "<S-l>", "gt")
 
--- Disable arrows and mouse
-vim.keymap.set("", "<up>", "<nop>", { noremap = true })
-vim.keymap.set("", "<down>", "<nop>", { noremap = true })
-vim.keymap.set("i", "<up>", "<nop>", { noremap = true })
-vim.keymap.set("i", "<down>", "<nop>", { noremap = true })
+-- Disable arrows
+vim.keymap.set("", "<up>", "<nop>")
+vim.keymap.set("", "<down>", "<nop>")
+vim.keymap.set("i", "<up>", "<nop>")
+vim.keymap.set("i", "<down>", "<nop>")

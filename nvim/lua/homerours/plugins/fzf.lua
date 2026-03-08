@@ -12,15 +12,16 @@ return {
         vim.keymap.set('n', '<leader>fgb', fzf.git_bcommits, {})
         vim.keymap.set('n', '<leader>fc', fzf.blines, {})
         vim.keymap.set('n', '<leader>f*', fzf.grep_cword, {})
+        local function open_buf_paths()
+            return vim.tbl_map(vim.api.nvim_buf_get_name, vim.tbl_filter(function(b)
+                return vim.api.nvim_buf_is_loaded(b) and vim.bo[b].buftype == ''
+            end, vim.api.nvim_list_bufs()))
+        end
         vim.keymap.set('n', '<leader>fb', function()
-            fzf.live_grep({ filespec = "$(echo " .. vim.fn.join(vim.tbl_map(function(b)
-                return vim.fn.bufname(b)
-            end, vim.api.nvim_list_bufs()), " ") .. ")" })
+            fzf.live_grep({ search_paths = open_buf_paths() })
         end, {})
         vim.keymap.set('n', '<leader>fb*', function()
-            fzf.grep_cword({ filespec = "$(echo " .. vim.fn.join(vim.tbl_map(function(b)
-                return vim.fn.bufname(b)
-            end, vim.api.nvim_list_bufs()), " ") .. ")" })
+            fzf.grep_cword({ search_paths = open_buf_paths() })
         end, {})
         vim.keymap.set('n', '<leader>o', fzf.buffers, {})
 

@@ -1,107 +1,84 @@
-return {
-    'neovim/nvim-lspconfig',
-    config = function()
-        -- Configure diagnostic signs
-        vim.diagnostic.config({
-            virtual_text = true,
-            signs = {
-                text = {
-                    [vim.diagnostic.severity.ERROR] = 'E',
-                    [vim.diagnostic.severity.WARN] = 'W',
-                    [vim.diagnostic.severity.HINT] = 'H',
-                    [vim.diagnostic.severity.INFO] = 'I',
-                }
-            }
-        })
+-- Configure diagnostic signs
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = 'E',
+            [vim.diagnostic.severity.WARN] = 'W',
+            [vim.diagnostic.severity.HINT] = 'H',
+            [vim.diagnostic.severity.INFO] = 'I',
+        }
+    }
+})
 
-        -- LSP keymaps via LspAttach autocmd
-        vim.api.nvim_create_autocmd('LspAttach', {
-            callback = function(args)
-                local opts = { buffer = args.buf, remap = false }
+-- LSP keymaps via LspAttach autocmd
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local opts = { buffer = args.buf, remap = false }
 
-                -- LSP navigation
-                vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-                vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, opts)
-                vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-                vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
-                vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-                vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
-                vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-                vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
-                vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
-                vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
-                vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+        vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+        vim.keymap.set("n", "<leader>f", function() vim.lsp.buf.format({ async = true }) end, opts)
+        vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
+        vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
+        vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
+        vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+        vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
+        vim.keymap.set("n", "<leader>vca", function() vim.lsp.buf.code_action() end, opts)
+        vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+        vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
+        vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-                -- fzf-lua LSP pickers (if available)
-                local has_fzf, fzf = pcall(require, 'fzf-lua')
-                if has_fzf then
-                    vim.keymap.set("n", "<leader>ti", fzf.lsp_implementations, opts)
-                    vim.keymap.set("n", "<leader>tr", fzf.lsp_references, opts)
-                    vim.keymap.set("n", "<leader>fm", fzf.lsp_document_symbols, opts)
-                    vim.keymap.set("n", "<leader>fwm", fzf.lsp_workspace_symbols, opts)
-                end
-            end
-        })
-
-        -- Get default capabilities for nvim-cmp
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        local has_cmp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
-        if has_cmp then
-            capabilities = vim.tbl_deep_extend('force', capabilities, cmp_nvim_lsp.default_capabilities())
+        -- fzf-lua LSP pickers (if available)
+        local has_fzf, fzf = pcall(require, 'fzf-lua')
+        if has_fzf then
+            vim.keymap.set("n", "<leader>ti", fzf.lsp_implementations, opts)
+            vim.keymap.set("n", "<leader>tr", fzf.lsp_references, opts)
+            vim.keymap.set("n", "<leader>fm", fzf.lsp_document_symbols, opts)
+            vim.keymap.set("n", "<leader>fwm", fzf.lsp_workspace_symbols, opts)
         end
-
-        -- Setup LSP servers
-        vim.lsp.config('basedpyright', {
-            cmd = { 'basedpyright-langserver', '--stdio' },
-            root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt', '.git' },
-            capabilities = capabilities,
-        })
-
-        vim.lsp.config('lua_ls', {
-            cmd = { 'lua-language-server' },
-            root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
-            capabilities = capabilities,
-            settings = {
-                Lua = {
-                    diagnostics = {
-                        globals = { 'vim' }
-                    },
-                    workspace = {
-                        library = vim.api.nvim_get_runtime_file('', true),
-                        checkThirdParty = false,
-                    },
-                    telemetry = { enable = false },
-                }
-            }
-        })
-
-        vim.lsp.config('ccls', {
-            cmd = { 'ccls' },
-            root_markers = { 'compile_commands.json', '.ccls', '.git' },
-            capabilities = capabilities,
-            init_options = {
-                clang = {
-                    extraArgs = {
-                        "-isystem", "/usr/local/include",
-                        "-isystem", "/Library/Developer/CommandLineTools/usr/lib/clang/17/include",
-                        "-isystem", "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
-                        "-isystem", "/Library/Developer/CommandLineTools/usr/include",
-                    },
-                },
-            },
-        })
-
-        vim.lsp.config('bashls', {
-            cmd = { 'bash-language-server', 'start' },
-            root_markers = { '.git' },
-            capabilities = capabilities,
-            filetypes = { 'sh', 'bash' },
-        })
-
-        -- Enable LSP servers
-        vim.lsp.enable('basedpyright')
-        vim.lsp.enable('lua_ls')
-        vim.lsp.enable('ccls')
-        vim.lsp.enable('bashls')
     end
-}
+})
+
+-- Capabilities (blink.cmp enhances these if available)
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+local has_blink, blink = pcall(require, 'blink.cmp')
+if has_blink then
+    capabilities = vim.tbl_deep_extend('force', capabilities, blink.get_lsp_capabilities())
+end
+
+vim.lsp.config('basedpyright', {
+    cmd = { 'basedpyright-langserver', '--stdio' },
+    root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt', '.git' },
+    capabilities = capabilities,
+})
+
+vim.lsp.config('lua_ls', {
+    cmd = { 'lua-language-server' },
+    root_markers = { '.luarc.json', '.luarc.jsonc', '.luacheckrc', '.stylua.toml', 'stylua.toml', 'selene.toml', 'selene.yml', '.git' },
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            diagnostics = { globals = { 'vim' } },
+            workspace = {
+                library = { vim.env.VIMRUNTIME },
+                checkThirdParty = false,
+            },
+            telemetry = { enable = false },
+        }
+    }
+})
+
+vim.lsp.config('ccls', {
+    cmd = { 'ccls' },
+    root_markers = { 'compile_commands.json', '.ccls', '.git' },
+    capabilities = capabilities,
+})
+
+vim.lsp.config('bashls', {
+    cmd = { 'bash-language-server', 'start' },
+    root_markers = { '.git' },
+    capabilities = capabilities,
+    filetypes = { 'sh', 'bash' },
+})
+
+vim.lsp.enable({ 'basedpyright', 'lua_ls', 'ccls', 'bashls' })

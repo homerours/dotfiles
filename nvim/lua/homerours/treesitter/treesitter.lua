@@ -5,24 +5,10 @@ return {
     config = function()
         vim.env.CC = 'gcc'
 
-        -- Enable treesitter highlighting and auto-install missing parsers
-        vim.api.nvim_create_autocmd('FileType', {
-            callback = function(args)
-                local lang = vim.treesitter.language.get_lang(vim.bo[args.buf].filetype)
-                if not lang then return end
-                if not pcall(vim.treesitter.language.inspect, lang) then
-                    local parsers = require('nvim-treesitter.parsers')
-                    if parsers.get_parser_configs()[lang] then
-                        pcall(vim.cmd, 'TSInstall ' .. lang)
-                    end
-                    return
-                end
-                pcall(vim.treesitter.start)
-            end,
-        })
-
-        -- Textobjects config (handled by nvim-treesitter-textobjects)
         require('nvim-treesitter.configs').setup {
+            ensure_installed = { 'lua', 'python', 'c', 'cpp', 'bash', 'markdown' },
+            auto_install = true,
+            highlight = { enable = true },
             textobjects = {
                 select = {
                     enable = true,
